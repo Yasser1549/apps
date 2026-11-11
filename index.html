@@ -108,27 +108,22 @@ footer{padding:16px;color:#708090;font-size:13px}
 <script>
 
 // ---------- أضف تطبيقاتك هنا ----------
-// repo: اسم المستودع اللي فيه الـ Release
-// file: اسم ملف الـ APK بالظبط (إنجليزي، من غير مسافات)
-
-var USER="Yasser1549";
+// apk: رابط تحميل ملف الـ APK الكامل (انسخه من Assets في صفحة الـ Release)
 
 var APPS=[
 {
 icon:"📖",
 name:"تحفيظ القرآن للأطفال",
 desc:"احفظ القرآن بالتكرار والتسميع والمراجعة، مع نقاط وشارات.",
-repo:"Quran",
-file:"quran.apk",
+apk:"https://github.com/Yasser1549/quran.apk/releases/download/V1.0/quran.apk",
 web:"https://yasser1549.github.io/Quran/"
 }
-// لإضافة تطبيق الفيت لاحقًا، شيل علامة // من الأسطر دي:
+// لإضافة تطبيق الفيت لاحقًا، شيل علامة // من الأسطر دي وحط رابطه الحقيقي:
 // ,{
 // icon:"💪",
 // name:"Fit System Ultimate",
 // desc:"برنامج تغذية وتمارين بالعربي.",
-// repo:"fit",
-// file:"fit.apk",
+// apk:"ضع هنا رابط ملف fit.apk المنسوخ من Assets",
 // web:"https://yasser1549.github.io/fit/"
 // }
 ];
@@ -136,8 +131,6 @@ web:"https://yasser1549.github.io/Quran/"
 var box=document.getElementById("apps");
 
 APPS.forEach(function(a){
-
-var url="https://github.com/"+USER+"/"+a.repo+"/releases/latest/download/"+a.file;
 
 var card=document.createElement("div");
 card.className="card";
@@ -154,7 +147,7 @@ p.innerText=a.desc;
 
 var dl=document.createElement("a");
 dl.className="btn";
-dl.href=url;
+dl.href=a.apk;
 dl.innerText="⬇️ تحميل التطبيق";
 
 card.appendChild(ic);
