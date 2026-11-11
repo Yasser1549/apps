@@ -60,9 +60,12 @@ border-radius:14px;
 color:#fff;
 text-decoration:none;
 background:#15966b;
+cursor:pointer;
 }
 
 .btn.alt{background:#1685a5;font-size:15px;padding:12px}
+.btn.share{background:#8064b5;font-size:15px;padding:12px}
+.btn.all{background:#536b82;font-size:15px;padding:12px}
 
 .msg{
 background:#fff;
@@ -101,8 +104,8 @@ footer{padding:16px;color:#708090;font-size:13px}
 
 <div class="wrap">
 
-<h1>📲 تحميل التطبيقات</h1>
-<p class="sub">اختر التطبيق واضغط تحميل، ثم اتبع خطوات التثبيت بالأسفل.</p>
+<h1 id="pageTitle">📲 تحميل التطبيقات</h1>
+<p class="sub" id="pageSub">اختر التطبيق واضغط تحميل، ثم اتبع خطوات التثبيت بالأسفل.</p>
 
 <div id="apps"><div class="msg">جاري تحميل التطبيقات...</div></div>
 
@@ -129,6 +132,12 @@ footer{padding:16px;color:#708090;font-size:13px}
 
 var box=document.getElementById("apps");
 
+// رابط الصفحة بدون أي إضافات
+var BASE=location.origin+location.pathname;
+
+// المعرّف المطلوب من الرابط: ?app=quran
+var wanted=new URLSearchParams(location.search).get("app");
+
 function showMsg(text,isErr){
 
 box.innerHTML="";
@@ -141,7 +150,30 @@ box.appendChild(m);
 
 }
 
-function makeCard(a){
+function copyText(txt,btn){
+
+var old=btn.innerText;
+
+function done(){
+btn.innerText="✅ تم نسخ الرابط";
+setTimeout(function(){btn.innerText=old;},2200);
+}
+
+if(navigator.clipboard && navigator.clipboard.writeText){
+
+navigator.clipboard.writeText(txt).then(done).catch(function(){
+window.prompt("انسخ الرابط:",txt);
+});
+
+}else{
+
+window.prompt("انسخ الرابط:",txt);
+
+}
+
+}
+
+function makeCard(a,single){
 
 var card=document.createElement("div");
 card.className="card";
@@ -208,6 +240,21 @@ card.appendChild(w);
 
 }
 
+// زر نسخ الرابط الخاص بالتطبيق (يظهر في القائمة العامة فقط)
+if(a.id && !single){
+
+var s=document.createElement("button");
+s.className="btn share";
+s.innerText="🔗 نسخ رابط هذا التطبيق";
+
+s.onclick=function(){
+copyText(BASE+"?app="+encodeURIComponent(a.id),s);
+};
+
+card.appendChild(s);
+
+}
+
 return card;
 
 }
@@ -231,8 +278,42 @@ return;
 
 box.innerHTML="";
 
+// رابط تطبيق واحد
+if(wanted){
+
+var found=list.filter(function(a){
+return a.id===wanted;
+})[0];
+
+if(found){
+
+document.title=found.name||"تحميل التطبيق";
+document.getElementById("pageTitle").innerText="📲 "+(found.name||"تحميل التطبيق");
+document.getElementById("pageSub").innerText="اضغط تحميل ثم اتبع خطوات التثبيت بالأسفل.";
+
+box.appendChild(makeCard(found,true));
+
+var all=document.createElement("a");
+all.className="btn all";
+all.href=BASE;
+all.innerText="📲 شاهد كل التطبيقات";
+
+box.appendChild(all);
+
+return;
+
+}
+
+// المعرّف غير موجود: نعرض القائمة كاملة مع تنبيه
+var warn=document.createElement("div");
+warn.className="msg err";
+warn.innerText="لم نجد هذا التطبيق. هذه كل التطبيقات المتاحة:";
+box.appendChild(warn);
+
+}
+
 list.forEach(function(a){
-box.appendChild(makeCard(a));
+box.appendChild(makeCard(a,false));
 });
 
 })
