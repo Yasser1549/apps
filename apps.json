@@ -1,0 +1,18 @@
+[
+  {
+    "img": "quran.png",
+    "icon": "📖",
+    "name": "تحفيظ القرآن للأطفال",
+    "desc": "احفظ القرآن بالتكرار والتسميع والمراجعة، مع نقاط وشارات.",
+    "apk": "https://github.com/Yasser1549/apps/releases/download/V1.0/quran.apk",
+    "web": "https://yasser1549.github.io/Quran/"
+  },
+  {
+    "img": "saydalyati.png",
+    "icon": "💊",
+    "name": "صيدليتي",
+    "desc": "تطبيق صيدليتي. حمّله وثبّته على أندرويد.",
+    "apk": "https://github.com/Yasser1549/apps/releases/download/Sydalit-v1.0/Sydality.apk",
+    "web": ""
+  }
+]
