@@ -1,5 +1,6 @@
 [
   {
+    "id": "quran",
     "img": "quran.png",
     "icon": "📖",
     "name": "تحفيظ القرآن للأطفال",
@@ -8,6 +9,7 @@
     "web": "https://yasser1549.github.io/Quran/"
   },
   {
+    "id": "sydality",
     "img": "Sydality.png",
     "icon": "💊",
     "name": "صيدليتي",
